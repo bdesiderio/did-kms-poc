@@ -1,0 +1,25 @@
+{
+	"private": true,
+	"name": "extrimian",
+	"version": "1.0.0",
+	"workspaces": [
+		"extrimian-npm/packages/ethr/**",
+		"extrimian-npm/packages/ethr/**",
+		"extrimian-npm/packages/did/**",
+		"extrimian-npm/packages/core/**",
+		"extrimian-npm/packages/vc/**",
+		"extrimian-npm/packages/dwn-client/**",
+		"extrimian-npm/packages/kms/core",
+		"extrimian-npm/packages/kms/suite/vc/jsonld",
+		"extrimian-npm/packages/kms/suite/**",
+		"extrimian-npm/packages/kms/client",
+		"ion-did-poc"
+	],
+	"scripts": {
+		"build:all": "yarn workspaces run build",
+		"clean": "find . \\( -name 'node_modules' -o -name 'dist' -o -name 'lib' \\) -type d -prune -exec rm -rf '{}' +"
+	},
+	"dependencies": {
+		"@types/node": "^17.0.41"
+	}
+}
