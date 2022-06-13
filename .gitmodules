@@ -1,0 +1,3 @@
+[submodule "extrimian-npm"]
+	path = extrimian-npm
+	url = https://github.com/extrimian/extrimian-npm

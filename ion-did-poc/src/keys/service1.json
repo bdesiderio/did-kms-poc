@@ -1,0 +1,5 @@
+[{
+  "id": "service888Id",
+  "type": "service1Type",
+  "serviceEndpoint": "http://www.service3.com"
+}]
