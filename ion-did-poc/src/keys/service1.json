@@ -1,5 +1,5 @@
 [{
-  "id": "service888Id",
+  "id": "NewRecoveryServiceId",
   "type": "service1Type",
   "serviceEndpoint": "http://www.service3.com"
 }]

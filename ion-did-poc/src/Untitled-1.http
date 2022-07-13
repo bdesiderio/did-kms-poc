@@ -1,7 +1,32 @@
-GET http://20.237.2.83/resolve/EiDqp0F_lROT206gYdVAz19Bjh_5XPD9H19CMoF3eRi_qg HTTP/1.1
+GET http://localhost:3000/resolve/EiBbUGTiY3GyBzQ0ibN97oCnP0keHvKfgUhzgdcblW3C1g HTTP/1.1
 
 ###
 
-GET http://20.237.2.83/resolve/EiAUUKVtk6AUjRKpveINSdq2CySrzP4ZOLsMfecv3MgixA HTTP/1.1
+GET http://20.237.2.83/resolve/EiAdmFGd1gWLh0YzPGwvE8Ial1QC0nMTG0KEfV8NkkCQ1w HTTP/1.1
+
+###
+
+GET http://20.237.2.83/resolve/EiBJrYsmcJK48HZmHCu8z6huHADe6I2E5y0eLdkb2-MJ_w HTTP/1.1
+
+###
+
+GET http://localhost:3000/resolve/EiAclXc3n77TtJw4aOOXq6c0skuDP0c3sSMZ_yetaRpplA HTTP/1.1
+
+###
+
+GET https://credentials.extrimian.com/credentials/revoke/%7Bcredentia
+
+###
+
+POST https://credentials.extrimian.com/credentials/revoke/33456880
+Content-Type: application/json
+
+{
+    "currentStatus": "Revoked",
+    "statusReason": "Esta la revoco por prueba"
+}
 
 
+###
+
+POST https://credentials.extrimian.com/credentials/verify/33456877 HTTP/1.1
