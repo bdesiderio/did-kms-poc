@@ -1,5 +1,5 @@
 {  
-  "id": "NewRecoveryPublicMethodId",
+  "id": "PublicMethodRId",
   "type": "EcdsaSecp256k1VerificationKey2019",
   "publicKeyJwk": {
     "kty": "EC",

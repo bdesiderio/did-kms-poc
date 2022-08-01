@@ -1321,6 +1321,25 @@
     canonicalize "^1.0.1"
     secp256k1 "^4.0.1"
 
+"@transmute/es256k-jws-ts@^0.1.3":
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/@transmute/es256k-jws-ts/-/es256k-jws-ts-0.1.3.tgz#19bbeb53a56f02768a6b283b26fc10f4cb43312e"
+  integrity sha512-ok0ZbjSDlL68/rnDPZclN4IoE5ytT6JjLXAzW+hR3kTHuIVwR9sLRu5tL5dB0izuEX2iIxwyJYJX7lV2b+sFnQ==
+  dependencies:
+    "@trust/keyto" "0.3.7"
+    base64url "3.0.1"
+    bitcoin-ts "1.14.2"
+    json-stringify-deterministic "1.0.1"
+
+"@trust/keyto@0.3.7":
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/@trust/keyto/-/keyto-0.3.7.tgz#e251264e302a7a6be64a3e208dacb2ef6268c946"
+  integrity sha512-t5kWWCTkPgg24JWVuCTPMx7l13F7YHdxBeJkT1vmoHjROgiOIEAN8eeY+iRmP1Hwsx+S7U55HyuqSsECr08a8A==
+  dependencies:
+    asn1.js "^5.0.1"
+    base64url "^3.0.1"
+    elliptic "^6.4.1"
+
 "@trust/keyto@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@trust/keyto/-/keyto-1.0.1.tgz#60fdea0a6049c04161a2a011772d6294edd7cd53"
@@ -1918,7 +1937,7 @@ asn1.js@^4.5.2:
     inherits "^2.0.1"
     minimalistic-assert "^1.0.0"
 
-asn1.js@^5.2.0:
+asn1.js@^5.0.1, asn1.js@^5.2.0:
   version "5.4.1"
   resolved "https://registry.yarnpkg.com/asn1.js/-/asn1.js-5.4.1.tgz#11a980b84ebb91781ce35b0fdc2ee294e3783f07"
   integrity sha512-+I//4cYPccV8LdmBLiX8CYvf9Sp3vQsrqu2QNXRcrbiWvcx/UdlFiqUJJzxRQxgsZmvhXhn4cSKeSmoFjVdupA==
@@ -2123,7 +2142,7 @@ base64url-universal@^1.0.1:
   dependencies:
     base64url "^3.0.0"
 
-base64url@^3.0.0, base64url@^3.0.1:
+base64url@3.0.1, base64url@^3.0.0, base64url@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/base64url/-/base64url-3.0.1.tgz#6399d572e2bc3f90a9a8b22d5dbb0a32d33f788d"
   integrity sha512-ir1UPr3dkwexU7FdV8qBBbNDRUhMmIekYMFZfi+C/sLNnRESKPl23nB9b2pltqfOQNnGzsDdId90AEtG5tCx4A==
@@ -2162,6 +2181,11 @@ binary-extensions@^2.0.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/binary-extensions/-/binary-extensions-2.2.0.tgz#75f502eeaf9ffde42fc98829645be4ea76bd9e2d"
   integrity sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA==
+
+bitcoin-ts@1.14.2:
+  version "1.14.2"
+  resolved "https://registry.yarnpkg.com/bitcoin-ts/-/bitcoin-ts-1.14.2.tgz#332acf4039bacb126bb4ddef93fc28c8b711305c"
+  integrity sha512-jaePXvofeIIZlHV7cjlWeGtP4FA+s0+AyM5bX7PgjkXsFPd1iHv9ea0XXo8XSnnI6roDk1kYaENK7EswdaiPjA==
 
 blakejs@^1.1.0:
   version "1.2.1"
@@ -3084,7 +3108,7 @@ electron-to-chromium@^1.4.147:
   resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.148.tgz#437430e03c58ccd1d05701f66980afe54d2253ec"
   integrity sha512-8MJk1bcQUAYkuvCyWZxaldiwoDG0E0AMzBGA6cv3WfuvJySiPgfidEPBFCRRH3cZm6SVZwo/oRlK1ehi1QNEIQ==
 
-elliptic@6.5.4, elliptic@^6.2.3, elliptic@^6.5.2, elliptic@^6.5.4:
+elliptic@6.5.4, elliptic@^6.2.3, elliptic@^6.4.1, elliptic@^6.5.2, elliptic@^6.5.4:
   version "6.5.4"
   resolved "https://registry.yarnpkg.com/elliptic/-/elliptic-6.5.4.tgz#da37cebd31e79a1367e941b592ed1fbebd58abbb"
   integrity sha512-iLhC6ULemrljPZb+QutR5TQGB+pdW6KGD5RSegS+8sorOZT+rdQFbsQFJgvN3eRqNALqJer4oQ16YvJHlU8hzQ==
@@ -5689,6 +5713,11 @@ json-stable-stringify-without-jsonify@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/json-stable-stringify-without-jsonify/-/json-stable-stringify-without-jsonify-1.0.1.tgz#9db7b59496ad3f3cfef30a75142d2d930ad72651"
   integrity sha512-Bdboy+l7tA3OGW6FjyFHWkP5LuByj1Tk33Ljyq0axyzdk9//JSi2u3fP1QSmd1KNwq6VOKYGlAu87CisVir6Pw==
+
+json-stringify-deterministic@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/json-stringify-deterministic/-/json-stringify-deterministic-1.0.1.tgz#3334798c374d723d46f7ba0e47d6e5e5ac8511f9"
+  integrity sha512-9Fg0OY3uyzozpvJ8TVbUk09PjzhT7O2Q5kEe30g6OrKhbA/Is92igcx0XDDX7E3yAwnIlUcYLRl+ZkVrBYVP7A==
 
 json-stringify-safe@~5.0.1:
   version "5.0.1"

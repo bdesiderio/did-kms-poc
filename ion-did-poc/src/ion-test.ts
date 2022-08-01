@@ -5,9 +5,10 @@ import { LANG, Suite } from "@extrimian/kms-core";
 import { FileStorage } from "./file-storage";
 
 let _kms: KMSClient = null;
+let storage = new FileStorage();
 
 const getKMS = async (): Promise<KMSClient> => {
-    let storage = new FileStorage();
+
 
     if (!_kms) {
         _kms = new KMSClient({
@@ -45,8 +46,8 @@ const createKey = async () => {
         services: [],
     };
 
-    const recoveryKey = [publicKey1.publicKeyJWK, publicKey2.publicKeyJWK];
-    const updateKey = [publicKey1.publicKeyJWK, publicKey2.publicKeyJWK];
+    const recoveryKey = publicKey1.publicKeyJWK;
+    const updateKey = publicKey1.publicKeyJWK;
 
     //LONG DID
     const longDid = IonDid.createLongFormDid({
@@ -79,105 +80,110 @@ const createKey = async () => {
     console.log(canonicalId);
 }
 
-const updateDID = async (did: string) => {
-    const publicKey = require('./keys/publicKeyModel1.json');
-    const publicKeys = [publicKey];
+// const updateDID = async (did: string) => {
+//     const publicKey = require('./keys/publicKeyModel1.json');
+//     const publicKeys = [publicKey];
 
-    let kms = await getKMS();
+//     // let keys = Array.from((await storage.getAll()).values());
+//     // keys = keys.filter(x => x.suite == "es256k");
 
-    const updateKey = (await kms.getPublicKeysBySuiteType(Suite.ES256k))[0];
+//     let kms = await getKMS();
 
-    const nextUpdateKey1 = await kms.create(Suite.ES256k);
-    const nextUpdateKey2 = await kms.create(Suite.ES256k);
+//     const updateKey = (await kms.getPublicKeysBySuiteType(Suite.ES256k))[0];
 
-    const services = require('./keys/service1.json');
-    const input = {
-        didSuffix: did,
-        updatePublicKey: updateKey,
-        nextUpdatePublicKey: [nextUpdateKey1.publicKeyJWK, nextUpdateKey2.publicKeyJWK],
-        signer: {
-            sign: async (header: object, content: object): Promise<string> => {
-                return await kms.sign(Suite.ES256k, updateKey, content);
-            }
-        },
-        servicesToAdd: services,
-        idsOfServicesToRemove: ['service5Id'],
-        publicKeysToAdd: publicKeys,
-        idsOfPublicKeysToRemove: ['publicKeyModel333Id']
-    };
+//     const nextUpdateKey1 = await kms.create(Suite.ES256k);
+//     const nextUpdateKey2 = await kms.create(Suite.ES256k);
 
-    const result = await IonRequest.createUpdateRequest(input);
+//     const services = require('./keys/service1.json');
+//     const input = {
+//         didSuffix: did,
+//         updatePublicKey: updateKey,
+//         nextUpdatePublicKey: [nextUpdateKey1.publicKeyJWK, nextUpdateKey2.publicKeyJWK],
+//         signer: {
+//             sign: async (header: object, content: object): Promise<string> => {
+//                 return await kms.sign(Suite.ES256k, updateKey, content);
+//             }
+//         },
+//         servicesToAdd: services,
+//         idsOfServicesToRemove: ['service5Id'],
+//         publicKeysToAdd: publicKeys,
+//         idsOfPublicKeysToRemove: ['publicKeyModel333Id']
+//     };
 
-    const options = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(result)
-    };
+//     const result = await IonRequest.createUpdateRequest(input);
 
-    let ionCoreEndpoint = "http://localhost:3000/create";
+//     const options = {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify(result)
+//     };
 
-    let response = await fetch(`${ionCoreEndpoint}`, options)
-    if (response.status != 200 && response.status != 201) {
-        const msg = await response.json();
-        throw new Error(`Ion DID creation is not ok: ${msg}`);
-    }
+//     let ionCoreEndpoint = "http://localhost:3000/create";
 
-    console.log(JSON.stringify(result));
-}
+//     let response = await fetch(`${ionCoreEndpoint}`, options)
+//     if (response.status != 200 && response.status != 201) {
+//         // keys.forEach(key => {
+//         //     storage.remove(key.)
+//         // });
+//         const msg = await response.json();
+//         throw new Error(`Ion DID creation is not ok: ${msg}`);
+//     }
 
-const DIDRecovery = async (did: string) => {
-    const publicKey = require('./keys/publicKeyModel1.json');
-    const publicKeys = [publicKey];
+//     console.log(JSON.stringify(result));
+// }
 
-    let kms = await getKMS();
+// const DIDRecovery = async (did: string) => {
+//     const publicKey = require('./keys/publicKeyModel1.json');
+//     const publicKeys = [publicKey];
 
-    const recoveryKey = (await kms.getPublicKeysBySuiteType(Suite.ES256k))[0];
+//     let kms = await getKMS();
 
-    const nextUpdateKey1 = await kms.create(Suite.ES256k);
-    const nextUpdateKey2 = await kms.create(Suite.ES256k);
+//     const recoveryKey = (await kms.getPublicKeysBySuiteType(Suite.ES256k))[0];
 
-    const services = require('./keys/service1.json');
+//     const nextUpdateKey1 = await kms.create(Suite.ES256k);
+//     const nextUpdateKey2 = await kms.create(Suite.ES256k);
 
-    const document: IonDocumentModel = {
-        publicKeys,
-        services
-    };
+//     const services = require('./keys/service1.json');
 
-    const result = await IonRequest.createRecoverRequest({
-        didSuffix: did,
-        recoveryPublicKey: recoveryKey,
-        nextRecoveryPublicKey: [nextUpdateKey1.publicKeyJWK, nextUpdateKey2.publicKeyJWK],
-        nextUpdatePublicKey: [nextUpdateKey1.publicKeyJWK, nextUpdateKey2.publicKeyJWK],
-        document,
-        signer: {
-            sign: async (header: object, content: object): Promise<string> => {
-                return await kms.sign(Suite.ES256k, recoveryKey, content);
-            }
-        },
-    });
+//     const document: IonDocumentModel = {
+//         publicKeys,
+//         services
+//     };
 
-    const options = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(result)
-    };
+//     const result = await IonRequest.createRecoverRequest({
+//         didSuffix: did,
+//         recoveryPublicKey: recoveryKey,
+//         nextRecoveryPublicKey: nextUpdateKey1.publicKeyJWK,
+//         nextUpdatePublicKey: nextUpdateKey1.publicKeyJWK,
+//         document,
+//         signer: {
+//             sign: async (header: object, content: object): Promise<string> => {
+//                 return await kms.sign(Suite.ES256k, recoveryKey, content);
+//             }
+//         },
+//     });
 
-    let ionCoreEndpoint = "http://localhost:3000/create";
+//     const options = {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify(result)
+//     };
 
-    let response = await fetch(`${ionCoreEndpoint}`, options)
-    if (response.status != 200 && response.status != 201) {
-        const msg = await response.json();
-        throw new Error(`Ion DID creation is not ok: ${msg}`);
-    }
-    return (await response.json() as any).didDocumentMetadata.canonicalId;
-}
+//     let ionCoreEndpoint = "http://localhost:3000/create";
+
+//     let response = await fetch(`${ionCoreEndpoint}`, options)
+//     if (response.status != 200 && response.status != 201) {
+//         const msg = await response.json();
+//         throw new Error(`Ion DID creation is not ok: ${msg}`);
+//     }
+//     return (await response.json() as any).didDocumentMetadata.canonicalId;
+// }
 
 // signWithJWK();
-// createKey();
-// create2Key();
-// updateDID("EiBbUGTiY3GyBzQ0ibN97oCnP0keHvKfgUhzgdcblW3C1g"); 
-DIDRecovery("EiBbUGTiY3GyBzQ0ibN97oCnP0keHvKfgUhzgdcblW3C1g");
+createKey();
+// updateDID("EiA-JJD2cnYY4Gxm2ilLs2Q6Gid6QJqx7Ka_-GYEQrGAhA");
+// DIDRecovery("EiCNjGeMUijrlXoriNBlzfbrYkdZxpBxc_q7N7RUS07Mpg");
