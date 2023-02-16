@@ -1,4 +1,4 @@
-import { IonDid, IonDocumentModel, IonRequest, IonPublicKeyPurpose } from "@decentralized-identity/ion-sdk";
+import { ModenaDid, ModenaDocumentModel, ModenaPublicKeyPurpose, ModenaRequest, ModenaSdkConfig } from "@extrimian/modena-sdk";
 import fetch from "node-fetch";
 import { KMSClient } from "@extrimian/kms-client";
 import { LANG, Suite } from "@extrimian/kms-core";
@@ -22,62 +22,76 @@ const getKMS = async (): Promise<KMSClient> => {
 
 const createKey = async () => {
     let kms = await getKMS();
+    ModenaSdkConfig.maxCanonicalizedDeltaSizeInBytes = 2000;
 
-    const publicKey1 = await kms.create(Suite.ES256k);
-    const secret1 = await kms.export(publicKey1.publicKeyJWK);
-    console.log(secret1);
 
-    const publicKey2 = await kms.create(Suite.ES256k);
-    const secret2 = await kms.export(publicKey2.publicKeyJWK);
-    console.log(secret2);
+    for (let i = 0; i < 10; i++) {
 
-    //CREATE BBS PUBLIC KEYS
-    const bbs = await kms.create(Suite.Bbsbls2020);
-    const secretBbs = await kms.export(bbs.publicKeyJWK);
-    console.log(secretBbs);
+        ModenaSdkConfig.maxCanonicalizedDeltaSizeInBytes = 2000;
+        
+        const publicKey1 = await kms.create(Suite.ES256k);
+        const secret1 = await kms.export(publicKey1.publicKeyJWK);
+        // console.log(secret1);
 
-    const document: IonDocumentModel = {
-        publicKeys: [{
-            id: "bbs2020",
-            publicKeyJwk: bbs.publicKeyJWK,
-            type: "Bls12381G1Key2020",
-            purposes: [IonPublicKeyPurpose.AssertionMethod],
-        }],
-        services: [],
-    };
+        const publicKey2 = await kms.create(Suite.ES256k);
+        const secret2 = await kms.export(publicKey2.publicKeyJWK);
+        // console.log(secret2);
 
-    const recoveryKey = publicKey1.publicKeyJWK;
-    const updateKey = publicKey1.publicKeyJWK;
+        //CREATE BBS PUBLIC KEYS
+        const bbs = await kms.create(Suite.Bbsbls2020);
+        const secretBbs = await kms.export(bbs.publicKeyJWK);
+        // console.log(secretBbs);
 
-    //LONG DID
-    const longDid = IonDid.createLongFormDid({
-        document: document,
-        recoveryKey: recoveryKey,
-        updateKey: updateKey,
-    });
+        const document: ModenaDocumentModel = {
+            publicKeys: [{
+                id: "bbs2020",
+                publicKeyJwk: bbs.publicKeyJWK,
+                type: "Bls12381G1Key2020",
+                purposes: [ModenaPublicKeyPurpose.AssertionMethod],
+            }],
+            services: [],
+        };
 
-    //Publicacion de un DID
-    const input = { recoveryKey, updateKey, document };
-    const result = IonRequest.createCreateRequest(input);
+        const recoveryKey = publicKey1.publicKeyJWK;
+        const updateKey = publicKey1.publicKeyJWK;
 
-    const options = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(result)
-    };
+        // //LONG DID
+        // const longDid = ModenaDid.createLongFormDid({
+        //     document: document,
+        //     recoveryKeys: [recoveryKey],
+        //     updateKeys: [updateKey],
+        // });
 
-    let ionCoreEndpoint = "http://localhost:3000/create";
+        //Publicacion de un DID
+        const input = { recoveryKeys: [recoveryKey], updateKeys: [updateKey], document };
+        const result = ModenaRequest.createCreateRequest(input);
 
-    let response = await fetch(`${ionCoreEndpoint}`, options)
-    if (response.status != 200 && response.status != 201) {
-        const msg = await response.json();
-        throw new Error(`Ion DID creation is not ok: ${msg}`);
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(result)
+        };
+
+        console.log("------------------------------------");
+        console.log(`POST https://is-starknet-dev.gcba.gob.ar/create`);
+        console.log(`Content-Type: application/json`);
+        console.log(``);
+        console.log(options.body);
+        console.log("------------------------------------");
     }
-    const canonicalId = (await response.json() as any).didDocumentMetadata.canonicalId;
 
-    console.log(canonicalId);
+    // let ionCoreEndpoint = "http://modena.gcba-extrimian.com:8080/create";
+
+    // let response = await fetch(`${ionCoreEndpoint}`, options)
+    // if (response.status != 200 && response.status != 201) {
+    //     const msg = await response.json();
+    //     throw new Error(`Ion DID creation is not ok: ${msg}`);
+    // }
+    // const canonicalId = (await response.json() as any).didDocumentMetadata.canonicalId;
+
+    // console.log(canonicalId);
 }
 
 // const updateDID = async (did: string) => {

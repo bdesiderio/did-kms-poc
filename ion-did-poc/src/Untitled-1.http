@@ -1,4 +1,11 @@
-GET http://localhost:3000/resolve/EiA-JJD2cnYY4Gxm2ilLs2Q6Gid6QJqx7Ka_-GYEQrGAhA HTTP/1.1
+###
+POST https://is-starknet-dev.gcba.gob.ar/create
+Content-Type: application/json
+
+{"type":"create","suffixData":{"deltaHash":"EiDEz7I5bN5tqN8Sjr9z6PcI0lbo6afk4H9_GPSBg7VKHQ","recoveryCommitment":["EiDknd_F2UGaC__Pie0tkCk3F8cMcxEazRj3sGq7-GE1fQ"]},"delta":{"updateCommitment":["EiDknd_F2UGaC__Pie0tkCk3F8cMcxEazRj3sGq7-GE1fQ"],"patches":[{"action":"replace","document":{"publicKeys":[{"id":"bbs2020","publicKeyJwk":{"kty":"EC","crv":"secp256k1","x":"tBEOEN_Cq4Z-T1A3_xZHsBEZGu4kSdQ4Rn1NHE_BhEgDb_II-krYNc27QYl1sRfB","y":"EE8_bcWZJbxfWTN-En9mr38owA8afl2wyH4sdlW7m7pc7pN_pgq_ItiZEJRlmIJb"},"type":"Bls12381G1Key2020","purposes":["assertionMethod"]}],"services":[]}}]}}
+###
+
+GET http://modena.gcba-extrimian.com:8080/resolve/EiACA_9zYL1GALifoDfTS7zjDQ0EsfF8x7rrmb7xdB_Qwg HTTP/1.1
 
 ###
 

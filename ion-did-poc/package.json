@@ -21,6 +21,7 @@
     "@decentralized-identity/ion-sdk": "^0.5.0",
     "@extrimian/kms-client": "*",
     "@extrimian/kms-core": "*",
+    "@extrimian/modena-sdk": "*",
     "@types/bs58": "^4.0.1",
     "@types/elliptic": "^6.4.14",
     "@types/node-jose": "^1.1.8",
